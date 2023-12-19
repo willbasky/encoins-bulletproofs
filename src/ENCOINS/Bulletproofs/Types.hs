@@ -25,7 +25,6 @@ import           ENCOINS.BaseTypes                  (GroupElement, FieldElement,
 import           ENCOINS.Crypto.Curve               (BLS12381Field)
 import           ENCOINS.Crypto.Field
 import           PlutusTx.Extra.ByteString          (ToBuiltinByteString (..), byteStringToInteger)
-import           PlutusTx.Extra.Prelude             (drop)
 
 --------------------------------------- Helper function -------------------------------------
 
@@ -57,7 +56,7 @@ instance Arbitrary BulletproofSetup where
 
 instance Random BulletproofSetup where
     random gen = (BulletproofSetup (gs !! 0) (gs !! 1) (drop 2 gs) (drop (2 + bulletproofN * bulletproofM) gs), gen')
-        where 
+        where
             (fs, gen') = randomList gen (2 * bulletproofN * bulletproofM + 2)
             gs         = map (groupExp groupGenerator) fs
     randomR _ = random
@@ -90,7 +89,7 @@ instance Arbitrary Secret where
         return $ Secret gamma v
 
 instance Random Secret where
-    random g = 
+    random g =
         let (gamma, g') = random g
             (v, g'')    = random g'
         in (Secret gamma v, g'')
@@ -138,8 +137,8 @@ instance Random Randomness where
     random g =
         let (es, gNew) = randomList g (2*n+4)
             n        = bulletproofN * bulletproofM
-        in (Randomness (head es) (take n $ drop 1 es) (take n $ drop (1+n) es) (es !! (2*n+1)) (es !! (2*n+2)) (es !! (2*n+3)), gNew)              
-    randoms g  = 
+        in (Randomness (head es) (take n $ drop 1 es) (take n $ drop (1+n) es) (es !! (2*n+1)) (es !! (2*n+2)) (es !! (2*n+3)), gNew)
+    randoms g  =
         let (a, g') = random g
         in a : randoms g'
 

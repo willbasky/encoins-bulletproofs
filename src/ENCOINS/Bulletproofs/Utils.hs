@@ -13,7 +13,7 @@ import           PlutusTx.Prelude
 
 import           ENCOINS.BaseTypes
 import           ENCOINS.Crypto.Field
-import           PlutusTx.Extra.Prelude    (drop, replicate)
+import           PlutusTx.Extra.Prelude    (replicate)
 import           PlutusTx.Extra.ByteString (byteStringToInteger)
 
 ----------------------------------- Challenge ---------------------------------------
